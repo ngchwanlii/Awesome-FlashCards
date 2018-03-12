@@ -105,7 +105,7 @@ const MainNavigator = StackNavigator({
 export default class App extends React.Component {
   state = {
     decks: null,
-    granted: true,
+    granted: false,
     fontLoaded: false,
     completedOneQuiz: false,
   };

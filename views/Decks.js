@@ -1,21 +1,28 @@
-import React, {Component} from 'react';
-import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
-import {FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {baseColor, black, gray, white} from '../utils/colors';
-import {getDecks} from '../utils/api';
-import {Common} from '../utils/common';
-import {getNumberTextFormat, isIOS} from '../utils/helpers';
-import {getDailyReminder} from '../utils/notification';
-import {MessageBox} from '../components/MessageBox';
+import React, { Component } from 'react';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { baseColor, black, gray, white } from '../utils/colors';
+import { getDecks } from '../utils/api';
+import { Common } from '../utils/common';
+import { getNumberTextFormat, isIOS } from '../utils/helpers';
+import { getDailyReminder } from '../utils/notification';
+import { MessageBox } from '../components/MessageBox';
 
 class DeckItem extends React.PureComponent {
   onPress = () => {
-    const {onPressItem, id, title} = this.props;
+    const { onPressItem, id, title } = this.props;
     onPressItem(id, title);
   };
 
   render() {
-    const {id, title, cardText} = this.props;
+    const { id, title, cardText } = this.props;
     return (
       <View style={styles.deckItem}>
         <TouchableOpacity key={id} onPress={this.onPress}>
@@ -29,7 +36,7 @@ class DeckItem extends React.PureComponent {
 
 class Decks extends Component {
   state = {
-    refreshing: false
+    refreshing: false,
   };
 
   handleKeyExtractor = item => item.id;
@@ -37,19 +44,19 @@ class Decks extends Component {
   handleOnPressItem = (id, title) => {
     this.props.navigation.navigate('Deck', {
       id,
-      title
+      title,
     });
   };
 
   handleRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     getDecks().then(decks => {
-      this.setState({refreshing: false});
+      this.setState({ refreshing: false });
       this.props.onDecksUpdate(decks);
     });
   };
 
-  renderItem = ({item}) => {
+  renderItem = ({ item }) => {
     return (
       <DeckItem
         id={item.id}
@@ -67,26 +74,26 @@ class Decks extends Component {
   );
 
   render() {
-    const {decks, granted, completedOneQuiz} = this.props;
+    const { decks, granted, completedOneQuiz } = this.props;
     return (
       <View style={styles.container}>
         {granted &&
-        !completedOneQuiz && (
-          <MessageBox
-            customBoxStyle={styles.messageBoxContainerStyle}
-            message={getDailyReminder()}
-            textColor={black}
-            textSize={12}
-            hasIcon={true}
-            icon={isIOS ? Ionicons : MaterialCommunityIcons}
-            customIconBoxStyle={styles.iconBox}
-            iconColor={white}
-            iconName={
-              isIOS ? 'ios-information-circle-outline' : 'information-outline'
-            }
-            iconSize={25}
-          />
-        )}
+          !completedOneQuiz && (
+            <MessageBox
+              customBoxStyle={styles.messageBoxContainerStyle}
+              message={getDailyReminder()}
+              textColor={black}
+              textSize={12}
+              hasIcon={true}
+              icon={isIOS ? Ionicons : MaterialCommunityIcons}
+              customIconBoxStyle={styles.iconBox}
+              iconColor={white}
+              iconName={
+                isIOS ? 'ios-information-circle-outline' : 'information-outline'
+              }
+              iconSize={25}
+            />
+          )}
         <FlatList
           data={decks}
           renderItem={this.renderItem}
@@ -109,7 +116,7 @@ class Decks extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: Common.PADDING
+    padding: Common.PADDING,
   },
   headerText: {
     // fontSize: 20,
@@ -124,34 +131,34 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.8,
-    shadowColor: 'rgba(0, 0, 0, 0.12)'
+    shadowColor: 'rgba(0, 0, 0, 0.12)',
   },
   decksListTitle: {
     fontSize: 20,
     height: 50,
     padding: 10,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   deckTitle: {
     fontSize: 14,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   cardText: {
     fontSize: 12,
-    color: gray
+    color: gray,
   },
   messageBoxContainerStyle: {
     alignSelf: 'center',
     width: '100%',
     marginTop: 30,
-    marginBottom: 30
+    marginBottom: 30,
   },
   iconBox: {
-    backgroundColor: baseColor
-  }
+    backgroundColor: baseColor,
+  },
 });
 
 export default Decks;
