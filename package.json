@@ -19,6 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "auth0-js": "^9.3.3",
     "expo": "^25.0.0",
     "lodash": "^4.17.5",
     "react": "16.2.0",
