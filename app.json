@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "sdkVersion": "25.0.0",
+    "orientation": "portrait",
+    "name": "Awesome FlashCards",
+    "description": "The best flashcard ever",
+    "slug": "awesome-flashcards",
+    "icon": "./assets/images/flash.png",
+    "notification": {
+      "icon": "./assets/images/flash.png"
+    },
+    "splash": {
+      "image": "./assets/images/app-splash-screen.png",
+      "backgroundColor": "#4885ed"
+    }
+  }
+}
